@@ -4,6 +4,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
 {
     public interface IElaboracion
     {
-        Task AnadirMateriaPrima(IngredienteAdaptado ingredientePrimaRecibida);
+        Task AnadirIngredientes(Ingrediente ingredientes);
+        Task AnadirIngredientes(List<Ingrediente> ingredientesPrimaRecibida);
     }
 }

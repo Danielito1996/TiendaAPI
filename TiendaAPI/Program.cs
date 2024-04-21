@@ -42,6 +42,7 @@ builder.Services.AddScoped<IAdaptadorMateriasPrimas,AdaptadorMateriasPrimas>();
 builder.Services.AddScoped<IServiciosAlmacen, ServiciosAlmacen>();
 builder.Services.AddScoped<IServiciosElaboracion, ServiciosElaboracion>();
 builder.Services.AddScoped<IServiciosVentas, ServiciosVentas>();
+builder.Services.AddScoped<IElaboracion,Elaboracion>();
 builder.Services.AddScoped<IServiciosNegocios, ServiciosNegocios>();
 builder.Services.AddScoped<IServicios, Servicios>();
 builder.Services.AddScoped<ITraduccion,Traduccion>();

@@ -5,7 +5,7 @@ using TiendaAPI.Servicios.Aplicacion.Factory;
 
 namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
 {
-    public class Elaboracion
+    public class Elaboracion:IElaboracion
     {
         StockDeIngredientes Stock { get; set; }
 
@@ -41,22 +41,21 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
             await _bd.ModificarElemento<StockDeIngredientes>(Stock);
             await ActualizarStock();
         }
-        public async Task AnadirIngredientes(IngredienteAdaptado ingredientePrimaRecibida)
+        public async Task AnadirIngredientes(Ingrediente ingredientes)
         {
-            Ingrediente adaptada = await _adaptador.Adaptar(ingredientePrimaRecibida);
             if (Stock == null)
             {
                await InicializarStock();
             }
             await ActualizarStock();
-            var encontrada = Stock.Ingredientes.FirstOrDefault(u => u.Descripcion == adaptada.Descripcion);
+            var encontrada = Stock.Ingredientes.FirstOrDefault(u => u.Descripcion == ingredientes.Descripcion);
             if (encontrada == null)
             {
-                Stock.Ingredientes.Add(adaptada);
+                Stock.Ingredientes.Add(ingredientes);
             }
             else
             {
-                encontrada.Cantidad += adaptada.Cantidad;
+                encontrada.Cantidad += ingredientes.Cantidad;
                 await _bd.ModificarElemento<Ingrediente>(encontrada);
             }
             await StockConCambios();

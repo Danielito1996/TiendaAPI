@@ -16,13 +16,15 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
         private IGenericFactory _factory;
         private IAlmacen _almacen;
         private ITraduccion _traductor;
+        private IElaboracion _elaboracion;
         private IAdaptadorMateriasPrimas _adaptadorMateriasPrimas;
-        public ServiciosAlmacen(IPorSQLite bd, ITraduccion traduccion,IAdaptadorMateriasPrimas adaptador,IAlmacen almacen, IServiciosLogs logs, IGenericFactory factory)
+        public ServiciosAlmacen(IPorSQLite bd,IElaboracion elaboracion, ITraduccion traduccion,IAdaptadorMateriasPrimas adaptador,IAlmacen almacen, IServiciosLogs logs, IGenericFactory factory)
         {
             _bd = bd;
             _logs = logs;
             _factory = factory;
             _almacen = almacen;
+            _elaboracion=elaboracion;
             _traductor = traduccion;
             _adaptadorMateriasPrimas = adaptador;
         }
@@ -46,8 +48,13 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
                 var listaIngredientes = await _traductor.TraducirPlanGeneralAIngredientes(planGeneral);
                 var listaMateriasPrimas = await _traductor.TraducirIngredientesMateriasPrimas(listaIngredientes);
                 await _almacen.RebajarMateriasPrimas(listaMateriasPrimas);
+                await _elaboracion.AnadirIngredientes(listaIngredientes);
             }
-            catch { return false; }
+            catch (Exception ex)
+            {
+                await _logs.Log($"No se ha cargado la Materia Prima en el area de elaboracion ERROR-> {ex.Message}");
+                return false;
+            }
             return true;
             
         }
