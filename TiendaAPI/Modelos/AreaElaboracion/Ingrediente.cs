@@ -12,10 +12,6 @@ namespace TiendaAPI.Modelos.AreaElaboracion
         public int? ProductoId { get; set; }
         public double Cantidad { get; set; }
         public string UnidadMedida { get; set; }
-        public int MateriaPrimaId {  get; set; }
-        public int? NormasTecnicasId { get; set; }
-        public virtual NormasTecnicas NormasTecnicas { get; set; }
-        public int? StockDeIngredientesId { get; set; }
-        public virtual StockDeIngredientes StockDeIngredientes { get; set; }
+        public int MateriaPrimaId { get; set; }
     }
 }

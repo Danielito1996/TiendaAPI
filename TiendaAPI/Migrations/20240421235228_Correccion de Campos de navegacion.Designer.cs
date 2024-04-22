@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaAPI.Data;
 
@@ -10,9 +11,11 @@ using TiendaAPI.Data;
 namespace TiendaAPI.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    partial class TiendaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240421235228_Correccion de Campos de navegacion")]
+    partial class CorrecciondeCamposdenavegacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -272,16 +275,21 @@ namespace TiendaAPI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("InventarioId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<double>("Precio")
                         .HasColumnType("REAL");
 
                     b.Property<int?>("ProductosListosParaVentasId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("VentaId")
+                    b.Property<int>("VentaId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InventarioId");
 
                     b.HasIndex("ProductosListosParaVentasId");
 
@@ -359,13 +367,25 @@ namespace TiendaAPI.Migrations
 
             modelBuilder.Entity("TiendaAPI.Modelos.Generales.Producto", b =>
                 {
+                    b.HasOne("TiendaAPI.Modelos.AreaAlmacen.Inventario", "Inventario")
+                        .WithMany()
+                        .HasForeignKey("InventarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TiendaAPI.Modelos.AreaVenta.ProductosListosParaVentas", null)
                         .WithMany("Productos")
                         .HasForeignKey("ProductosListosParaVentasId");
 
-                    b.HasOne("TiendaAPI.Modelos.AreaVenta.Venta", null)
+                    b.HasOne("TiendaAPI.Modelos.AreaVenta.Venta", "Venta")
                         .WithMany("Productos")
-                        .HasForeignKey("VentaId");
+                        .HasForeignKey("VentaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inventario");
+
+                    b.Navigation("Venta");
                 });
 
             modelBuilder.Entity("TiendaAPI.Modelos.AreaAlmacen.Inventario", b =>

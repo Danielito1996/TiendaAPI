@@ -10,7 +10,5 @@ namespace TiendaAPI.Modelos.AreaAlmacen
         public double Cantidad { get; set; }
         public double Costo { get; set; }
         public string UnidadMedida { get; set; }
-        public int InventarioId { get; set; }
-        public virtual Inventario Inventario { get; set; }
     }
 }

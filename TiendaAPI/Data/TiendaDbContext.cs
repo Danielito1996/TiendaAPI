@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Modelos.AreaElaboracion;
+using TiendaAPI.Modelos.AreaFinanzas;
 using TiendaAPI.Modelos.AreaVenta;
 using TiendaAPI.Modelos.Generales;
 namespace TiendaAPI.Data
@@ -17,6 +18,8 @@ namespace TiendaAPI.Data
         public DbSet<ProductosListosParaVentas> ProductosListosParaVentas { get; set; }
         public DbSet<Venta> Ventas { get;set; } 
         public DbSet<Producto> Productos { get; set; }
+        public DbSet<Adquisicion> Adquisiciones { get; set; }
+        public DbSet<Compras> Compras { get; set; }
         public TiendaDbContext(DbContextOptions<TiendaDbContext> options) : base(options)
         {
 

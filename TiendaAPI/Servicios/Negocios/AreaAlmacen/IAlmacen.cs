@@ -7,5 +7,9 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
         Inventario Inventario { get;}
         Task AnadirMateriaPrima(MateriaPrimaAdapter materiaPrimaRecibida);
         Task<bool> RebajarMateriasPrimas(List<MateriaPrima> lista);
+        Task QuitarMateriasPrimas(MateriaPrima materiaPrimaAdapter);
+        Task<List<MateriaPrima>> ObtenerMateriasPrimas();
+        Task ModificarMateriasPrimas(MateriaPrima materiaPrima);
+        Task<MateriaPrima> ObtenerDatosDeMateriasPrimas(int Id);
     }
 }

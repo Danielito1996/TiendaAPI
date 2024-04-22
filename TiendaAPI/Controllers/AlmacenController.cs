@@ -2,6 +2,7 @@
 using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
+using TiendaAPI.Servicios.Aplicacion.Logs;
 using TiendaAPI.Servicios.Negocios;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen;
 
@@ -15,6 +16,7 @@ namespace TiendaAPI.Controllers
     {
         private IServicios _servicios;
         private IServiciosAlmacen _serviciosAlmacen;
+        private IServiciosLogs _logs;
         private IPorSQLite _bd;
         private IAlmacen _almacen;
 
@@ -22,33 +24,46 @@ namespace TiendaAPI.Controllers
         {
             _almacen = almacen;
             _servicios = servicios;
+            _logs=_servicios.ObtenerServiciosDeAplicacion().ObtenerServiciosLogs();
             _serviciosAlmacen=_servicios.ObtenerServiciosDeNegocios().ObtenerServiciosDeAlmacen();
             _bd = _servicios.ObtenerServiciosDeAplicacion().ObtenerAccesoBD();
-              
         }
 
         // GET: api/<AlmacenController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                List<MateriaPrima> materiasPrimas = await _serviciosAlmacen.MostrarMateriasPrimas();
+                return Ok(materiasPrimas);
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes manejar la excepción como prefieras
+                await _logs.Log($"Error a la hora de obtener datos {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
 
         // GET api/<AlmacenController>/5
         [HttpGet("{id}")]
-        public async Task<string> Get(int id)
+        public async Task<IActionResult> ObtenerUnaMateriaPrima(int id)
         {
-            return "OK";
+
+            try
+            {
+                MateriaPrima materiasPrimas = await _serviciosAlmacen.InformaciondeMateriaPrima(id);
+                return Ok(materiasPrimas);
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes manejar la excepción como prefieras
+                await _logs.Log($"Error a la hora de obtener datos {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
 
-        // POST api/<AlmacenController>
-        /*[HttpPost]
-        public async Task<IActionResult> InsertarListaDeMateriasPrimas([FromBody] List<MateriaPrimaAdapter> materiaprima)
-        {
-           
-            return Ok();
-
-        }*/
         [HttpPost]
         public async Task<IActionResult> InsertarMateriaPrima([FromBody] MateriaPrimaAdapter materiaprima)
         {
@@ -58,25 +73,47 @@ namespace TiendaAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return Problem($"Problemas al insertar {ex.Message}");
             }
-            var a = _almacen.Inventario;
-            var l = a.MateriaPrima;
-
             return Ok();
-
         }
 
+        //Esto no esta funcionando
         // PUT api/<AlmacenController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> ModificarMateriaPrima([FromBody] MateriaPrima value)
         {
+            try
+            {
+                MateriaPrima aModificar = await _almacen.ObtenerDatosDeMateriasPrimas(value.Id);
+                aModificar = value;
+                await _almacen.ModificarMateriasPrimas(aModificar);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes manejar la excepción como prefieras
+                await _logs.Log($"Error a la hora de obtener datos {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
 
         // DELETE api/<AlmacenController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
+                var aEliminar=await _almacen.ObtenerDatosDeMateriasPrimas(id);   
+                await _almacen.QuitarMateriasPrimas(aEliminar);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // Aquí puedes manejar la excepción como prefieras
+                await _logs.Log($"Error a la hora de obtener datos {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
     }
 }

@@ -5,7 +5,11 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
 {
     public interface IServiciosAlmacen
     {
-        Task<bool> RecepcionarMateriaPrima(MateriaPrimaAdapter materiaPrima);
-        Task<bool> PasarMateriasPrimasAProcesamiento(PlanGeneral planGeneral);
+        Task RecepcionarMateriaPrima(MateriaPrimaAdapter materiaPrima);
+        Task PasarMateriasPrimasAProcesamiento(PlanGeneral planGeneral);
+        Task EliminarMateriaPrima(MateriaPrima materiaPrima);
+        Task<List<MateriaPrima>> MostrarMateriasPrimas();
+        Task ModificarDatosDeMateriaPrima(MateriaPrima materiaPrima);
+        Task<MateriaPrima> InformaciondeMateriaPrima(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using TiendaAPI.Servicios.Negocios.AreaAlmacen;
 using TiendaAPI.Servicios.Negocios.AreaElaboracion;
 using TiendaAPI.Servicios.Negocios.AreaVentas;
+using TiendaAPI.Servicios.Negocios.ServiciosGenerales;
 
 namespace TiendaAPI.Servicios.Negocios
 {
@@ -9,5 +10,6 @@ namespace TiendaAPI.Servicios.Negocios
         IServiciosAlmacen ObtenerServiciosDeAlmacen();
         IServiciosElaboracion ObtenerServiciosDeElaboracion();
         IServiciosVentas ObtenerServiciosDeVentas();
+        IServiciosGenerales ObtenerServiciosGenerales();
     }
 }
