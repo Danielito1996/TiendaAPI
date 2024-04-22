@@ -5,7 +5,9 @@ using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 using TiendaAPI.Servicios.Aplicacion.Logs;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
 using TiendaAPI.Servicios.Negocios.AreaElaboracion;
+using TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores;
 
 namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
 {

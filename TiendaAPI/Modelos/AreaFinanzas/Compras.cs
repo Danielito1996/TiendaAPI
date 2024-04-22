@@ -3,7 +3,7 @@ using TiendaAPI.Servicios.Aplicacion.Factory;
 
 namespace TiendaAPI.Modelos.AreaFinanzas
 {
-    public class Compras : IEntity
+    public class Compras : IEntity,IFinanzasModel
     {
         public int Id { get; set; }
         public DateTime fecha { get; set; }

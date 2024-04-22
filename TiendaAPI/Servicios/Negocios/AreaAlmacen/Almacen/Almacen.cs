@@ -8,29 +8,29 @@ using SQLitePCL;
 using TiendaAPI.Modelos.AreaElaboracion;
 using System.Reflection.Metadata.Ecma335;
 
-namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
+namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
 {
-    public class Almacen:IAlmacen
+    public class Almacen : IAlmacen
     {
         private IPorSQLite _bd;
         private IGenericFactory _factory;
         private IAdaptadorMateriasPrimas _materiaPrimaAdapter;
-        public Inventario Inventario { get;internal set; }
-        public Almacen(IPorSQLite porSQLite,IGenericFactory genericFactory, IAdaptadorMateriasPrimas materiaPrimaAdapter) 
+        public Inventario Inventario { get; internal set; }
+        public Almacen(IPorSQLite porSQLite, IGenericFactory genericFactory, IAdaptadorMateriasPrimas materiaPrimaAdapter)
         {
             _factory = genericFactory;
             _bd = porSQLite;
-            _materiaPrimaAdapter=materiaPrimaAdapter;
-            
+            _materiaPrimaAdapter = materiaPrimaAdapter;
+
         }
         #region Inicializacion,Actualizacion de Inventario
         async Task InicializarAlmacen()
         {
-            
-            Inventario = (await _bd.ObtenerListaDeElementos<Inventario>(Inventario)).Where(i=>i.Codigo=="inicial").FirstOrDefault();
-            if(Inventario == null)
+
+            Inventario = (await _bd.ObtenerListaDeElementos<Inventario>(Inventario)).Where(i => i.Codigo == "inicial").FirstOrDefault();
+            if (Inventario == null)
             {
-                var inicializacion =await _factory.ConstruirElemento<MateriaPrima>();
+                var inicializacion = await _factory.ConstruirElemento<MateriaPrima>();
                 inicializacion.UnidadMedida = "UnidadDePrueba";
                 inicializacion.Cantidad = 9;
                 inicializacion.Descripcion = "Producto de Prueba";
@@ -38,33 +38,33 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
                 var inventacioInicial = await _factory.ConstruirElemento<Inventario>();
                 inventacioInicial.MateriaPrima.Add(inicializacion);
                 inventacioInicial.Codigo = "inicial";
-                await _bd.GuardarElemento<Inventario>(inventacioInicial);
+                await _bd.GuardarElemento(inventacioInicial);
             }
         }
         async Task ActualizarInventario()
         {
-            Inventario = (await _bd.ObtenerListaDeElementos<Inventario>()).Where(i=>i.Codigo=="inicial").FirstOrDefault();
+            Inventario = (await _bd.ObtenerListaDeElementos<Inventario>()).Where(i => i.Codigo == "inicial").FirstOrDefault();
         }
         async Task InventarioConCambios()
         {
-            await _bd.ModificarElemento<Inventario>(Inventario);
+            await _bd.ModificarElemento(Inventario);
             await ActualizarInventario();
         }
         #endregion
-        public async Task AnadirMateriaPrima(MateriaPrimaAdapter materiaPrimaRecibida )
+        public async Task AnadirMateriaPrima(MateriaPrimaAdapter materiaPrimaRecibida)
         {
-            MateriaPrima adaptada =await _materiaPrimaAdapter.Adaptar(materiaPrimaRecibida);
-            if(Inventario==null)
+            MateriaPrima adaptada = await _materiaPrimaAdapter.Adaptar(materiaPrimaRecibida);
+            if (Inventario == null)
                 await InicializarAlmacen();
-            var encontrada=Inventario.MateriaPrima.Where(u=>u.Descripcion==adaptada.Descripcion).FirstOrDefault();
-            if(encontrada==null)
+            var encontrada = Inventario.MateriaPrima.Where(u => u.Descripcion == adaptada.Descripcion).FirstOrDefault();
+            if (encontrada == null)
             {
                 Inventario.MateriaPrima.Add(adaptada);
             }
             else
             {
                 encontrada.Cantidad += adaptada.Cantidad;
-                await _bd.ModificarElemento<MateriaPrima>(encontrada);
+                await _bd.ModificarElemento(encontrada);
             }
             await InventarioConCambios();
         }
@@ -112,7 +112,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
             }
             else
             {
-                encontrada.Cantidad +=materiaPrima.Cantidad;
+                encontrada.Cantidad += materiaPrima.Cantidad;
                 await _bd.EliminarElemento<MateriaPrima>(encontrada.Id);
             }
             await InventarioConCambios();
@@ -125,16 +125,16 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
         }
         public async Task ModificarMateriasPrimas(MateriaPrima materiaPrima)
         {
-            if(Inventario == null)
+            if (Inventario == null)
                 await InicializarAlmacen();
-            await _bd.ModificarElemento<MateriaPrima>(materiaPrima);
+            await _bd.ModificarElemento(materiaPrima);
             await InventarioConCambios();
         }
         public async Task<MateriaPrima> ObtenerDatosDeMateriasPrimas(int Id)
         {
-            if(Inventario==null)
+            if (Inventario == null)
                 await InicializarAlmacen();
-            var encontrado=Inventario.MateriaPrima.FirstOrDefault(u=>u.Id==Id);
+            var encontrado = Inventario.MateriaPrima.FirstOrDefault(u => u.Id == Id);
             if (encontrado == null)
                 throw new Exception();
             return encontrado;

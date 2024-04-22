@@ -4,11 +4,10 @@ using TiendaAPI.Modelos.AreaFinanzas;
 using TiendaAPI.Modelos.Generales;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
-using TiendaAPI.Servicios.Negocios.AreaElaboracion;
 
-namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
+namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores
 {
-    public class Traduccion:ITraduccion
+    public class Traduccion : ITraduccion
     {
         private IPorSQLite _bd;
         private IGenericFactory _factory;
@@ -107,19 +106,5 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
             }
             return materiaPrima;
         }
-        /*public async Task<List<MateriaPrimaAdapter>> ArmarMateriasPrimasDeCompras(Adquisicion adquisicion)
-        {
-            List<MateriaPrimaAdapter> materiasPrimasAdaptadas = new List<MateriaPrimaAdapter>();
-
-            foreach (var compra in adquisicion.Compras)
-            {
-                // Asume que tienes un método para convertir una MateriaPrima en un MateriaPrimaAdapter.
-                MateriaPrimaAdapter materiaPrimaAdaptada = ConvertirAMateriaPrimaAdapter(compra.Materia);
-
-                materiasPrimasAdaptadas.Add(materiaPrimaAdaptada);
-            }
-
-            return materiasPrimasAdaptadas;
-        }*/
     }
 }

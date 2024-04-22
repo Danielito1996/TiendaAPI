@@ -1,10 +1,10 @@
 ﻿using TiendaAPI.Modelos.AreaAlmacen;
 
-namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
+namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
 {
     public interface IAlmacen
     {
-        Inventario Inventario { get;}
+        Inventario Inventario { get; }
         Task AnadirMateriaPrima(MateriaPrimaAdapter materiaPrimaRecibida);
         Task<bool> RebajarMateriasPrimas(List<MateriaPrima> lista);
         Task QuitarMateriasPrimas(MateriaPrima materiaPrimaAdapter);

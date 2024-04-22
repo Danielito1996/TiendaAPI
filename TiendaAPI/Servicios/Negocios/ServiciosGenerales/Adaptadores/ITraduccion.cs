@@ -1,7 +1,7 @@
 ﻿using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Modelos.AreaAlmacen;
 
-namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
+namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores
 {
     public interface ITraduccion
     {

@@ -10,6 +10,9 @@ using TiendaAPI.Servicios.Negocios;
 using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion;
 using TiendaAPI.Servicios.Negocios.ServiciosGenerales;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
+using TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen.AreaCompras;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,7 @@ builder.Services.AddScoped<IElaboracion,Elaboracion>();
 builder.Services.AddScoped<IServiciosNegocios, ServiciosNegocios>();
 builder.Services.AddScoped<IServicios, Servicios>();
 builder.Services.AddScoped<ITraduccion,Traduccion>();
+builder.Services.AddScoped<IServiciosCompras, ServiciosCompras>();
 builder.Services.AddScoped<IServiciosGenerales,ServicioGeneral>();
 builder.Services.AddScoped<IAdaptadorIngredientes,AdaptadorIngredientes>();
 builder.Services.AddScoped<IAdaptadorMateriasPrimas, AdaptadorMateriasPrimas>();

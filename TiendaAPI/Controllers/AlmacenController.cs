@@ -5,6 +5,7 @@ using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Logs;
 using TiendaAPI.Servicios.Negocios;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

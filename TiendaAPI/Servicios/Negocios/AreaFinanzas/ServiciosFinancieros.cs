@@ -1,6 +1,6 @@
 ﻿using TiendaAPI.Modelos.AreaFinanzas;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
-using TiendaAPI.Servicios.Negocios.AreaAlmacen;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
 
 namespace TiendaAPI.Servicios.AreaFinanzas
 {
