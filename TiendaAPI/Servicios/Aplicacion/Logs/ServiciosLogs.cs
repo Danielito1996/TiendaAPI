@@ -6,7 +6,7 @@
         public ServiciosLogs()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string logFolder = Path.Combine(docPath, "GestorFinanciero", "Log");
+            string logFolder = Path.Combine(docPath, "API", "Log");
             if (!Directory.Exists(logFolder))
             {
                 Directory.CreateDirectory(logFolder);

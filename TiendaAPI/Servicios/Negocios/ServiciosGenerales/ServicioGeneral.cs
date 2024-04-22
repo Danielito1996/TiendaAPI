@@ -15,15 +15,32 @@ namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales
         }
         public async Task AgregarProductos(ProductoAdaptado aInsertar)
         {
-            var aguardar = await _factory.ConstruirElemento<Producto>();
-            if ((aInsertar == null)||(aInsertar.Descripcion != "")||(aInsertar.Precio != 0))
+            if (aInsertar == null || string.IsNullOrEmpty(aInsertar.Descripcion) || aInsertar.Precio <= 0)
             {
                 throw new ArgumentNullException(nameof(aInsertar));
             }
-            aguardar.Descripcion= aInsertar.Descripcion;
-            aguardar.Precio= aInsertar.Precio;
-            
+
+            var aguardar = await _factory.ConstruirElemento<Producto>();
+            aguardar.Descripcion = aInsertar.Descripcion;
+            aguardar.Precio = aInsertar.Precio;
+
             await _bd.GuardarElemento<Producto>(aguardar);
+        }
+        public async Task<List<Producto>> ObtenerInformacionProductos()
+        {
+            return await _bd.ObtenerListaDeElementos<Producto>();
+        }
+        public async Task<Producto> ObtenerInformacionProductos(int id)
+        {
+            return await _bd.ObtenerElemento<Producto>(id);
+        }
+        public async Task ModificarProducto(Producto producto)
+        {
+            await _bd.ModificarElemento<Producto>(producto);
+        }
+        public async Task EliminarProductos(int id)
+        {
+            await _bd.EliminarElemento<Producto>(id);   
         }
     }
 }

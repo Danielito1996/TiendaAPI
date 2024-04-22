@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using TiendaAPI.Modelos.Generales;
 using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion.Logs;
@@ -24,16 +25,34 @@ namespace TiendaAPI.Controllers
 
         // GET: api/<ProductosController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var lis=await serviciosGenerales.ObtenerInformacionProductos();
+                return Ok(lis);
+            }
+            catch (Exception ex)
+            {
+                await _logs.Log($"Error a la hora de optener datos {ex.Message}");
+                return Problem($"Error a la hora de optener datos {ex.Message}");
+            }
         }
 
         // GET api/<ProductosController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            try
+            {
+                var lis = await serviciosGenerales.ObtenerInformacionProductos(id);
+                return Ok(lis);
+            }
+            catch (Exception ex)
+            {
+                await _logs.Log($"Error a la hora de optener datos {ex.Message}");
+                return Problem($"Error a la hora de optener datos {ex.Message}");
+            }
         }
 
         // POST api/<ProductosController>
@@ -53,15 +72,36 @@ namespace TiendaAPI.Controllers
         }
 
         // PUT api/<ProductosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] Producto producto)
         {
+            try
+            {
+                await serviciosGenerales.ModificarProducto(producto);
+                return Ok("Producto Modificado");
+            }
+            catch (Exception ex)
+            {
+                await _logs.Log($"Error al modificar Productos : {ex.Message}");
+                return Problem($"Error al modificar Productos : {ex.Message}");
+            }
+
         }
 
         // DELETE api/<ProductosController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            try
+            {
+                await serviciosGenerales.EliminarProductos(id);
+                return Ok("Producto Modificado");
+            }
+            catch (Exception ex)
+            {
+                await _logs.Log($"Error al modificar Productos : {ex.Message}");
+                return Problem($"Error al modificar Productos : {ex.Message}");
+            }
         }
     }
 }
