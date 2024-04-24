@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaAPI.Data;
 
@@ -10,9 +11,11 @@ using TiendaAPI.Data;
 namespace TiendaAPI.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    partial class TiendaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424054243_Modelo ReporteDeVentas")]
+    partial class ModeloReporteDeVentas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -54,6 +57,9 @@ namespace TiendaAPI.Migrations
                     b.Property<int?>("ReporteVentasGeneralesId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ReporteVentasGeneralesId1")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UnidadMedida")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -63,6 +69,8 @@ namespace TiendaAPI.Migrations
                     b.HasIndex("InventarioId");
 
                     b.HasIndex("ReporteVentasGeneralesId");
+
+                    b.HasIndex("ReporteVentasGeneralesId1");
 
                     b.ToTable("MateriasPrimas");
                 });
@@ -333,6 +341,10 @@ namespace TiendaAPI.Migrations
                     b.HasOne("TiendaAPI.Modelos.AreaVenta.ReporteVentasGenerales", null)
                         .WithMany("MateriaPrimaGastada")
                         .HasForeignKey("ReporteVentasGeneralesId");
+
+                    b.HasOne("TiendaAPI.Modelos.AreaVenta.ReporteVentasGenerales", null)
+                        .WithMany("MateriasPrimasDevueltas")
+                        .HasForeignKey("ReporteVentasGeneralesId1");
                 });
 
             modelBuilder.Entity("TiendaAPI.Modelos.AreaElaboracion.Ingrediente", b =>
@@ -447,6 +459,8 @@ namespace TiendaAPI.Migrations
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.ReporteVentasGenerales", b =>
                 {
                     b.Navigation("MateriaPrimaGastada");
+
+                    b.Navigation("MateriasPrimasDevueltas");
 
                     b.Navigation("ProductosVendidos");
                 });
