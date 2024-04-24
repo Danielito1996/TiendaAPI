@@ -66,7 +66,7 @@ namespace TiendaAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertarMateriaPrima([FromBody] MateriaPrimaAdapter materiaprima)
+        public async Task<IActionResult> InsertarMateriaPrima([FromBody] MateriaPrima materiaprima)
         {
             try
             {

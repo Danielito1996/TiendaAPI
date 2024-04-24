@@ -7,7 +7,9 @@ namespace TiendaAPI.Modelos.AreaFinanzas
     {
         public int Id { get; set; }
         public DateTime fecha { get; set; }
-        public MateriaPrimaAdapter MateriaPrima { get; set; }
+        public string MateriaPrima { get; set; }
         public double PrecioDeCompra { get; set; }
+        public double Cantidad { get; set; }
+        public string UnidadDeMedida { get; set; }
     }
 }

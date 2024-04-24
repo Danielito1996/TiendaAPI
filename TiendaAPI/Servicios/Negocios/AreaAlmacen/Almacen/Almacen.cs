@@ -7,6 +7,7 @@ using TiendaAPI.Servicios.Aplicacion.Factory;
 using SQLitePCL;
 using TiendaAPI.Modelos.AreaElaboracion;
 using System.Reflection.Metadata.Ecma335;
+using TiendaAPI.Modelos.AreaFinanzas;
 
 namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
 {
@@ -51,9 +52,8 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
             await ActualizarInventario();
         }
         #endregion
-        public async Task AnadirMateriaPrima(MateriaPrimaAdapter materiaPrimaRecibida)
+        public async Task AnadirMateriaPrima(MateriaPrima adaptada)
         {
-            MateriaPrima adaptada = await _materiaPrimaAdapter.Adaptar(materiaPrimaRecibida);
             if (Inventario == null)
                 await InicializarAlmacen();
             var encontrada = Inventario.MateriaPrima.Where(u => u.Descripcion == adaptada.Descripcion).FirstOrDefault();
@@ -63,9 +63,26 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
             }
             else
             {
+                encontrada.Costo = await CalcularCostoPromedio(adaptada.Costo, encontrada.Descripcion);
                 encontrada.Cantidad += adaptada.Cantidad;
                 await _bd.ModificarElemento(encontrada);
             }
+            await InventarioConCambios();
+        }
+        public async Task InsertarCompras(List<MateriaPrima> materiaPrima)
+        {
+            if (Inventario == null)
+                await InicializarAlmacen();
+            foreach (var item in materiaPrima)
+            {
+                var materiaEnInventario = Inventario.MateriaPrima.FirstOrDefault(m => m.Descripcion == item.Descripcion);
+                if (materiaEnInventario != null)
+                {
+                    materiaEnInventario.Costo = await CalcularCostoPromedio(item.Costo, materiaEnInventario.Descripcion);
+                    materiaEnInventario.Cantidad += item.Cantidad;
+                }
+            }
+            await _bd.ModificarElemento<Inventario>(Inventario);
             await InventarioConCambios();
         }
         public async Task<bool> RebajarMateriasPrimas(List<MateriaPrima> lista)
@@ -138,6 +155,15 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
             if (encontrado == null)
                 throw new Exception();
             return encontrado;
+        }
+        async Task<double> CalcularCostoPromedio(double NuevoPrecio,string Descripcion)
+        {
+            List<Compras>compras=(await _bd.ObtenerListaDeElementos<Compras>()).Where(u=>u.MateriaPrima==Descripcion).ToList();
+            if (compras.Count == 0)
+                return NuevoPrecio;
+            double sumaPrecios = compras.Sum(u => u.PrecioDeCompra) + NuevoPrecio;
+            int CantiDadDeCompras = compras.Count+1;
+            return sumaPrecios / CantiDadDeCompras;
         }
     }
 }

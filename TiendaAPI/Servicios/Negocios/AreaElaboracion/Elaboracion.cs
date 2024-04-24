@@ -67,10 +67,8 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
             {
                 await InicializarStock();
             }
-
             foreach (var item in ingredientesPrimaRecibida)
             {
-                await ActualizarStock();
                 var encontrada = Stock.Ingredientes.FirstOrDefault(u => u.Descripcion == item.Descripcion);
                 if (encontrada == null)
                 {
@@ -84,5 +82,6 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
                 await StockConCambios();
             }
         }
+
     }
 }

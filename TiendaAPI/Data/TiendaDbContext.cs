@@ -20,6 +20,7 @@ namespace TiendaAPI.Data
         public DbSet<Producto> Productos { get; set; }
         public DbSet<Adquisicion> Adquisiciones { get; set; }
         public DbSet<Compras> Compras { get; set; }
+        public DbSet<Factura> Facturas { get; set; }
         public TiendaDbContext(DbContextOptions<TiendaDbContext> options) : base(options)
         {
 

@@ -11,16 +11,13 @@ namespace TiendaAPI.Modelos.AreaVenta
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public double Monto { get; set; }
+        public double Cantidad {  get; set; }
         public List<Producto> Productos{get; set; } 
 
         public double ActualizarMonto()
         {
-            double acumulado = 0;
-            foreach (var item in Productos)
-            {
-                acumulado += item.Precio;
-            }
-            return acumulado;
+            var monto = Productos.Sum(u => u.Precio);
+            return monto;
         }
         
     }

@@ -5,7 +5,8 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
     public interface IAlmacen
     {
         Inventario Inventario { get; }
-        Task AnadirMateriaPrima(MateriaPrimaAdapter materiaPrimaRecibida);
+        Task InsertarCompras(List<MateriaPrima> materiaPrima);
+        Task AnadirMateriaPrima(MateriaPrima materiaPrimaRecibida);
         Task<bool> RebajarMateriasPrimas(List<MateriaPrima> lista);
         Task QuitarMateriasPrimas(MateriaPrima materiaPrimaAdapter);
         Task<List<MateriaPrima>> ObtenerMateriasPrimas();

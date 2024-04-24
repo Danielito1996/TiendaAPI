@@ -6,6 +6,7 @@ namespace TiendaAPI.Modelos.AreaFinanzas
     {
         public int Id { get; set; }
         public List<Compras> Compras { get; set; }
+        public double? MontoTotal { get; set; }
 
     }
 }

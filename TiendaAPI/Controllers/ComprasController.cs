@@ -2,6 +2,7 @@
 using TiendaAPI.Modelos.AreaFinanzas;
 using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion.Logs;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.AreaCompras;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,11 +14,13 @@ namespace TiendaAPI.Controllers
     public class ComprasController : ControllerBase
     {
         private IServiciosLogs _logs;
-        private IServiciosCompras _serviciosCompras;
-        public ComprasController(IServiciosLogs logs,IServiciosCompras compras)
+        private IServiciosAlmacen _serviciosAlmacen;
+        private IServiciosCompras _compras;
+        public ComprasController(IServiciosLogs logs,IServiciosAlmacen serviciosAlmacen)
         { 
             _logs= logs;
-            _serviciosCompras= compras;
+            _serviciosAlmacen=serviciosAlmacen;
+            _compras=_serviciosAlmacen.ObtenerServiciosCompras();
         }
         // GET: api/<ComprasController>
         [HttpGet]
@@ -35,16 +38,17 @@ namespace TiendaAPI.Controllers
 
         // POST api/<ComprasController>
         [HttpPost]
-        public async void Post([FromBody] List<Compras> compras)
+        public async Task<IActionResult> Post([FromBody] List<Compras> compras)
         {
             try
             {
-               if(compras.Count>1)
-                   await _serviciosCompras.GenerarNuevaAdquisicion(compras);
+                await _serviciosAlmacen.RealizarCompra(compras);
+                return Ok();
             }
             catch (Exception ex)
-            { 
-
+            {
+                await _logs.Log($"Error a la hora de Insertar la adquisicion :{ex.Message}");
+                return Problem($"Error a la hora de Insertar la adquisicion :{ex.Message}");
             }
         }
 

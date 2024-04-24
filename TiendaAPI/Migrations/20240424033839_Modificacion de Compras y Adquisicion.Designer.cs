@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaAPI.Data;
 
@@ -10,9 +11,11 @@ using TiendaAPI.Data;
 namespace TiendaAPI.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    partial class TiendaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424033839_Modificacion de Compras y Adquisicion")]
+    partial class ModificaciondeComprasyAdquisicion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -218,21 +221,6 @@ namespace TiendaAPI.Migrations
                     b.ToTable("Compras");
                 });
 
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Factura", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Facturas");
-                });
-
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.ProductosListosParaVentas", b =>
                 {
                     b.Property<int>("Id")
@@ -250,12 +238,6 @@ namespace TiendaAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("Cantidad")
-                        .HasColumnType("REAL");
-
-                    b.Property<int?>("FacturaId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
@@ -263,8 +245,6 @@ namespace TiendaAPI.Migrations
                         .HasColumnType("REAL");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FacturaId");
 
                     b.ToTable("Ventas");
                 });
@@ -356,13 +336,6 @@ namespace TiendaAPI.Migrations
                         .HasForeignKey("AdquisicionId");
                 });
 
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Venta", b =>
-                {
-                    b.HasOne("TiendaAPI.Modelos.AreaVenta.Factura", null)
-                        .WithMany("Ventas")
-                        .HasForeignKey("FacturaId");
-                });
-
             modelBuilder.Entity("TiendaAPI.Modelos.Generales.Producto", b =>
                 {
                     b.HasOne("TiendaAPI.Modelos.AreaVenta.ProductosListosParaVentas", null)
@@ -397,11 +370,6 @@ namespace TiendaAPI.Migrations
             modelBuilder.Entity("TiendaAPI.Modelos.AreaFinanzas.Adquisicion", b =>
                 {
                     b.Navigation("Compras");
-                });
-
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Factura", b =>
-                {
-                    b.Navigation("Ventas");
                 });
 
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.ProductosListosParaVentas", b =>
