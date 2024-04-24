@@ -8,6 +8,7 @@ using SQLitePCL;
 using TiendaAPI.Modelos.AreaElaboracion;
 using System.Reflection.Metadata.Ecma335;
 using TiendaAPI.Modelos.AreaFinanzas;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen.AdaptadoresDeAlmacen;
 
 namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
 {

@@ -13,6 +13,9 @@ using TiendaAPI.Servicios.Negocios.ServiciosGenerales;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
 using TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.AreaCompras;
+using TiendaAPI.Servicios.Negocios.AreaElaboracion.StockDeElaboracion;
+using TiendaAPI.Servicios.Negocios.AreaElaboracion.AdaptadoresDeElaboracion;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen.AdaptadoresDeAlmacen;
 
 var builder = WebApplication.CreateBuilder(args);
 

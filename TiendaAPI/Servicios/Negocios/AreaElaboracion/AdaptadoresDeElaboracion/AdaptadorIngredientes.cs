@@ -2,9 +2,9 @@
 using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 
-namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
+namespace TiendaAPI.Servicios.Negocios.AreaElaboracion.AdaptadoresDeElaboracion
 {
-    public class AdaptadorIngredientes:IAdaptadorIngredientes
+    public class AdaptadorIngredientes : IAdaptadorIngredientes
     {
         private IGenericFactory _genericFactory;
         public AdaptadorIngredientes(IGenericFactory genericFactory)
@@ -17,7 +17,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
             entregar.Descripcion = recibido.Descripcion;
             entregar.MateriaPrimaId = recibido.MateriaPrimaId;
             entregar.UnidadMedida = recibido.UnidadMedida;
-            entregar.Cantidad=recibido.Cantidad;
+            entregar.Cantidad = recibido.Cantidad;
             return entregar;
         }
     }

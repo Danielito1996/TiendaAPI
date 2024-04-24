@@ -2,11 +2,12 @@
 using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
+using TiendaAPI.Servicios.Negocios.AreaElaboracion.AdaptadoresDeElaboracion;
 using TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores;
 
-namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
+namespace TiendaAPI.Servicios.Negocios.AreaElaboracion.StockDeElaboracion
 {
-    public class Elaboracion:IElaboracion
+    public class Elaboracion : IElaboracion
     {
         StockDeIngredientes Stock { get; set; }
 
@@ -14,39 +15,39 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
         private IGenericFactory _factory;
         private IAdaptadorIngredientes _adaptador;
         private ITraduccion _traductor;
-        public Elaboracion(IPorSQLite bd,IGenericFactory factory,ITraduccion traductor,IAdaptadorIngredientes adaptador) 
-        { 
+        public Elaboracion(IPorSQLite bd, IGenericFactory factory, ITraduccion traductor, IAdaptadorIngredientes adaptador)
+        {
             _bd = bd;
             _factory = factory;
             _adaptador = adaptador;
-            _traductor= traductor;
+            _traductor = traductor;
         }
         async Task InicializarStock()
         {
 
             Stock = (await _bd.ObtenerListaDeElementos<StockDeIngredientes>(Stock)).Where(i => i.Codigo == "inicial").FirstOrDefault();
             if (Stock == null)
-            { 
+            {
                 var stock = await _factory.ConstruirElemento<StockDeIngredientes>();
-               
+
                 stock.Codigo = "inicial";
-                await _bd.GuardarElemento<StockDeIngredientes>(stock);
+                await _bd.GuardarElemento(stock);
             }
         }
         async Task ActualizarStock()
         {
-             Stock = (await _bd.ObtenerListaDeElementos<StockDeIngredientes>()).Where(i => i.Codigo == "inicial").FirstOrDefault();
+            Stock = (await _bd.ObtenerListaDeElementos<StockDeIngredientes>()).Where(i => i.Codigo == "inicial").FirstOrDefault();
         }
         async Task StockConCambios()
         {
-            await _bd.ModificarElemento<StockDeIngredientes>(Stock);
+            await _bd.ModificarElemento(Stock);
             await ActualizarStock();
         }
         public async Task AnadirIngredientes(Ingrediente ingredientes)
         {
             if (Stock == null)
             {
-               await InicializarStock();
+                await InicializarStock();
             }
             await ActualizarStock();
             var encontrada = Stock.Ingredientes.FirstOrDefault(u => u.Descripcion == ingredientes.Descripcion);
@@ -57,7 +58,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
             else
             {
                 encontrada.Cantidad += ingredientes.Cantidad;
-                await _bd.ModificarElemento<Ingrediente>(encontrada);
+                await _bd.ModificarElemento(encontrada);
             }
             await StockConCambios();
         }
@@ -77,11 +78,18 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
                 else
                 {
                     encontrada.Cantidad += item.Cantidad;
-                    await _bd.ModificarElemento<Ingrediente>(encontrada);
+                    await _bd.ModificarElemento(encontrada);
                 }
                 await StockConCambios();
             }
         }
+        public async Task ReducirIngredientes(List<Ingrediente> ingredientes)
+        {
+            if (Stock == null)
+            {
+                await InicializarStock();
+            }
 
+        }
     }
 }
