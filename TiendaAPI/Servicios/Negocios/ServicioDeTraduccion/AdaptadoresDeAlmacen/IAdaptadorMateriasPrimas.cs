@@ -1,6 +1,6 @@
 ﻿using TiendaAPI.Modelos.AreaAlmacen;
 
-namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.AdaptadoresDeAlmacen
+namespace TiendaAPI.Servicios.Negocios.ServicioDeTraduccion.AdaptadoresDeAlmacen
 {
     public interface IAdaptadorMateriasPrimas
     {

@@ -8,14 +8,14 @@ namespace TiendaAPI.Servicios.AreaFinanzas
     {
         private IPorSQLite _bd;
         private IAlmacen _almacen;
-        public ServiciosFinancieros(IPorSQLite bd,IAlmacen almacen)
+        public ServiciosFinancieros(IPorSQLite bd, IAlmacen almacen)
         {
             _bd = bd;
             _almacen = almacen;
         }
         public async Task RealizarCompra(Adquisicion adquisicion)
         {
-            await _bd.GuardarElemento<Adquisicion>(adquisicion);    
+            await _bd.GuardarElemento<Adquisicion>(adquisicion);
 
         }
     }

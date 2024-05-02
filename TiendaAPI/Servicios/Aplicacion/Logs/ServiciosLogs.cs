@@ -1,6 +1,6 @@
 ﻿namespace TiendaAPI.Servicios.Aplicacion.Logs
 {
-    public class ServiciosLogs:IServiciosLogs
+    public class ServiciosLogs : IServiciosLogs
     {
         private string _logFilePath;
         public ServiciosLogs()

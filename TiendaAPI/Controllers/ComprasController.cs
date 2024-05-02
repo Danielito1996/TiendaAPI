@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TiendaAPI.Modelos.AreaFinanzas;
-using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion.Logs;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.AreaCompras;
@@ -16,11 +15,11 @@ namespace TiendaAPI.Controllers
         private IServiciosLogs _logs;
         private IServiciosAlmacen _serviciosAlmacen;
         private IServiciosCompras _compras;
-        public ComprasController(IServiciosLogs logs,IServiciosAlmacen serviciosAlmacen)
-        { 
-            _logs= logs;
-            _serviciosAlmacen=serviciosAlmacen;
-            _compras=_serviciosAlmacen.ObtenerServiciosCompras();
+        public ComprasController(IServiciosLogs logs, IServiciosAlmacen serviciosAlmacen)
+        {
+            _logs = logs;
+            _serviciosAlmacen = serviciosAlmacen;
+            _compras = _serviciosAlmacen.ObtenerServiciosCompras();
         }
         // GET: api/<ComprasController>
         [HttpGet]

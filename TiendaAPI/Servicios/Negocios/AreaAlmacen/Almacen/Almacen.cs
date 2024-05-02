@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using TiendaAPI.Modelos.AreaAlmacen;
-using TiendaAPI.Data;
+﻿using TiendaAPI.Modelos.AreaAlmacen;
+using TiendaAPI.Modelos.AreaFinanzas;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
-using SQLitePCL;
-using TiendaAPI.Modelos.AreaElaboracion;
-using System.Reflection.Metadata.Ecma335;
-using TiendaAPI.Modelos.AreaFinanzas;
-using TiendaAPI.Servicios.Negocios.AreaAlmacen.AdaptadoresDeAlmacen;
+using TiendaAPI.Servicios.Negocios.ServicioDeTraduccion.AdaptadoresDeAlmacen;
 
 namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
 {
@@ -157,13 +151,13 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen
                 throw new Exception();
             return encontrado;
         }
-        async Task<double> CalcularCostoPromedio(double NuevoPrecio,string Descripcion)
+        async Task<double> CalcularCostoPromedio(double NuevoPrecio, string Descripcion)
         {
-            List<Compras>compras=(await _bd.ObtenerListaDeElementos<Compras>()).Where(u=>u.MateriaPrima==Descripcion).ToList();
+            List<Compras> compras = (await _bd.ObtenerListaDeElementos<Compras>()).Where(u => u.MateriaPrima == Descripcion).ToList();
             if (compras.Count == 0)
                 return NuevoPrecio;
             double sumaPrecios = compras.Sum(u => u.PrecioDeCompra) + NuevoPrecio;
-            int CantiDadDeCompras = compras.Count+1;
+            int CantiDadDeCompras = compras.Count + 1;
             return sumaPrecios / CantiDadDeCompras;
         }
     }

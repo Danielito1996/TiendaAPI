@@ -6,5 +6,6 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion.StockDeElaboracion
     {
         Task AnadirIngredientes(Ingrediente ingredientes);
         Task AnadirIngredientes(List<Ingrediente> ingredientesPrimaRecibida);
+        Task ReducirIngredientes(List<Ingrediente> ingredientes);
     }
 }

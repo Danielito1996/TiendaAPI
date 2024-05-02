@@ -6,7 +6,7 @@ using TiendaAPI.Servicios.Aplicacion.Factory;
 
 namespace TiendaAPI.Servicios.Aplicacion.BaseDatos
 {
-    public class PorSQLite:IPorSQLite
+    public class PorSQLite : IPorSQLite
     {
         private readonly TiendaDbContext _context;
         public PorSQLite(TiendaDbContext context)
@@ -15,14 +15,14 @@ namespace TiendaAPI.Servicios.Aplicacion.BaseDatos
         }
         public async Task<List<T>> ObtenerListaDeElementos<T>() where T : class, new()
         {
-            
-                return await _context.Set<T>().ToListAsync();
+
+            return await _context.Set<T>().ToListAsync();
         }
         public async Task<List<T>> ObtenerListaDeElementos<T>(Inventario inventario) where T : class, new()
         {
-                return await _context.Set<T>()
-                    .Include(i => ((Inventario)(object)i).MateriaPrima)
-                    .ToListAsync() as List<T>;
+            return await _context.Set<T>()
+                .Include(i => ((Inventario)(object)i).MateriaPrima)
+                .ToListAsync() as List<T>;
         }
         public async Task<List<T>> ObtenerListaDeElementos<T>(StockDeIngredientes stock) where T : class, new()
         {

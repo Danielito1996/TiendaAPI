@@ -1,8 +1,4 @@
-﻿using TiendaAPI.Modelos.AreaAlmacen;
-using TiendaAPI.Modelos.AreaElaboracion;
-using TiendaAPI.Modelos.AreaVenta;
-
-namespace TiendaAPI.Modelos.Generales
+﻿namespace TiendaAPI.Modelos.Generales
 {
     public class ProductoAdaptado
     {

@@ -1,7 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations.Schema;
-using TiendaAPI.Servicios.Aplicacion.Factory;
+﻿using TiendaAPI.Servicios.Aplicacion.Factory;
 
 namespace TiendaAPI.Modelos.AreaElaboracion
 {

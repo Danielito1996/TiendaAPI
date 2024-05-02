@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using TiendaAPI.Modelos.Generales;
 using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion.Logs;
@@ -16,12 +15,12 @@ namespace TiendaAPI.Controllers
         private IServicios Servicios;
         private IServiciosGenerales serviciosGenerales;
         private IServiciosLogs _logs;
-        public ProductosController(IServicios servicios) 
+        public ProductosController(IServicios servicios)
         {
             Servicios = servicios;
-            serviciosGenerales=Servicios.ObtenerServiciosDeNegocios().ObtenerServiciosGenerales();
-            _logs=Servicios.ObtenerServiciosDeAplicacion().ObtenerServiciosLogs();
-        }    
+            serviciosGenerales = Servicios.ObtenerServiciosDeNegocios().ObtenerServiciosGenerales();
+            _logs = Servicios.ObtenerServiciosDeAplicacion().ObtenerServiciosLogs();
+        }
 
         // GET: api/<ProductosController>
         [HttpGet]
@@ -29,7 +28,7 @@ namespace TiendaAPI.Controllers
         {
             try
             {
-                var lis=await serviciosGenerales.ObtenerInformacionProductos();
+                var lis = await serviciosGenerales.ObtenerInformacionProductos();
                 return Ok(lis);
             }
             catch (Exception ex)

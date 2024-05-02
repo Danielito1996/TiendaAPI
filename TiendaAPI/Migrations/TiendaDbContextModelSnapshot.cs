@@ -324,6 +324,25 @@ namespace TiendaAPI.Migrations
                     b.ToTable("Productos");
                 });
 
+            modelBuilder.Entity("TiendaAPI.Modelos.Generales.ProductoVendido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Cantidad")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("productoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("productoId");
+
+                    b.ToTable("ProductosVendidos");
+                });
+
             modelBuilder.Entity("TiendaAPI.Modelos.AreaAlmacen.MateriaPrima", b =>
                 {
                     b.HasOne("TiendaAPI.Modelos.AreaAlmacen.Inventario", null)
@@ -407,6 +426,17 @@ namespace TiendaAPI.Migrations
                     b.HasOne("TiendaAPI.Modelos.AreaVenta.Venta", null)
                         .WithMany("Productos")
                         .HasForeignKey("VentaId");
+                });
+
+            modelBuilder.Entity("TiendaAPI.Modelos.Generales.ProductoVendido", b =>
+                {
+                    b.HasOne("TiendaAPI.Modelos.Generales.Producto", "producto")
+                        .WithMany()
+                        .HasForeignKey("productoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("producto");
                 });
 
             modelBuilder.Entity("TiendaAPI.Modelos.AreaAlmacen.Inventario", b =>

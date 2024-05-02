@@ -2,9 +2,9 @@
 
 namespace TiendaAPI.Modelos.AreaVenta
 {
-    public class Factura:IEntity
+    public class Factura : IEntity
     {
-        public int Id {  get; set; }
+        public int Id { get; set; }
         public string Codigo { get; set; }
         public List<Venta> Ventas { get; set; }
     }

@@ -3,7 +3,6 @@ using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Logs;
-using TiendaAPI.Servicios.Negocios;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
 
@@ -25,8 +24,8 @@ namespace TiendaAPI.Controllers
         {
             _almacen = almacen;
             _servicios = servicios;
-            _logs=_servicios.ObtenerServiciosDeAplicacion().ObtenerServiciosLogs();
-            _serviciosAlmacen=_servicios.ObtenerServiciosDeNegocios().ObtenerServiciosDeAlmacen();
+            _logs = _servicios.ObtenerServiciosDeAplicacion().ObtenerServiciosLogs();
+            _serviciosAlmacen = _servicios.ObtenerServiciosDeNegocios().ObtenerServiciosDeAlmacen();
             _bd = _servicios.ObtenerServiciosDeAplicacion().ObtenerAccesoBD();
         }
 
@@ -105,7 +104,7 @@ namespace TiendaAPI.Controllers
         {
             try
             {
-                var aEliminar=await _almacen.ObtenerDatosDeMateriasPrimas(id);   
+                var aEliminar = await _almacen.ObtenerDatosDeMateriasPrimas(id);
                 await _almacen.QuitarMateriasPrimas(aEliminar);
                 return Ok();
             }

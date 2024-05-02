@@ -1,5 +1,4 @@
-﻿using TiendaAPI.Modelos.AreaAlmacen;
-using TiendaAPI.Modelos.AreaElaboracion;
+﻿using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 using TiendaAPI.Servicios.Negocios.AreaElaboracion.AdaptadoresDeElaboracion;
@@ -89,7 +88,32 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion.StockDeElaboracion
             {
                 await InicializarStock();
             }
+            foreach (var ingrediente in ingredientes)
+            {
+                var ingredienteEncontrado = Stock.Ingredientes.FirstOrDefault(m => m.Descripcion == ingrediente.Descripcion);
 
+                if (ingredienteEncontrado != null)
+                {
+                    if (ingredienteEncontrado.Cantidad - ingrediente.Cantidad < 0)
+                    {
+                        // Si la cantidad resultante es negativa, lanza una excepción con el nombre del ingrediente.
+                        throw new Exception($"No se aprueba el plan general, la materia prima '{ingrediente.Descripcion}' esta en indiponibilidad, ya que la cantidad demandada para su cumplimiento sobrepasa lo que se tiene en almacen");
+                    }
+                    else
+                    {
+                        // Si la cantidad resultante es positiva o cero, realiza la rebaja.
+                        ingredienteEncontrado.Cantidad -= ingrediente.Cantidad;
+                    }
+                }
+                else
+                {
+                    // Si la materia prima no existe en el inventario, lanza una excepción con el nombre del ingrediente.
+                    throw new Exception($"La materia prima '{ingrediente.Descripcion}' no existe en el inventario.");
+                }
+            }
+            // Si todas las rebajas se realizaron correctamente, confirma la rebaja en la base de datos y devuelve true.
+            await _bd.ModificarElemento<StockDeIngredientes>(Stock);
+            await StockConCambios();
         }
     }
 }

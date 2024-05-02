@@ -1,21 +1,24 @@
 using Microsoft.EntityFrameworkCore;
 using TiendaAPI.Data;
+using TiendaAPI.Servicios;
+using TiendaAPI.Servicios.Aplicacion;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 using TiendaAPI.Servicios.Aplicacion.Logs;
-using TiendaAPI.Servicios.Negocios.AreaAlmacen;
-using TiendaAPI.Servicios.Negocios.AreaElaboracion;
-using TiendaAPI.Servicios.Negocios.AreaVentas;
 using TiendaAPI.Servicios.Negocios;
-using TiendaAPI.Servicios;
-using TiendaAPI.Servicios.Aplicacion;
-using TiendaAPI.Servicios.Negocios.ServiciosGenerales;
+using TiendaAPI.Servicios.Negocios.AreaAlmacen;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
-using TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.AreaCompras;
-using TiendaAPI.Servicios.Negocios.AreaElaboracion.StockDeElaboracion;
+using TiendaAPI.Servicios.Negocios.AreaElaboracion;
 using TiendaAPI.Servicios.Negocios.AreaElaboracion.AdaptadoresDeElaboracion;
-using TiendaAPI.Servicios.Negocios.AreaAlmacen.AdaptadoresDeAlmacen;
+using TiendaAPI.Servicios.Negocios.AreaElaboracion.StockDeElaboracion;
+using TiendaAPI.Servicios.Negocios.AreaVentas;
+using TiendaAPI.Servicios.Negocios.AreaVentas.GeneracionDeReportes;
+using TiendaAPI.Servicios.Negocios.AreaVentas.ZonaDeProdcutosVendidos;
+using TiendaAPI.Servicios.Negocios.AreaVentas.ZonaDeVentas;
+using TiendaAPI.Servicios.Negocios.ServicioDeTraduccion.AdaptadoresDeAlmacen;
+using TiendaAPI.Servicios.Negocios.ServiciosGenerales;
+using TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,21 +44,25 @@ if (!File.Exists(dbPath))
 builder.Services.AddTransient<IPorSQLite, PorSQLite>();
 builder.Services.AddScoped<IGenericFactory, GenericFactory>();
 builder.Services.AddScoped<IServiciosLogs, ServiciosLogs>();
-builder.Services.AddScoped<IServiciosAplicacion,ServiciosAplicacion>();
+builder.Services.AddScoped<IServiciosAplicacion, ServiciosAplicacion>();
 
 //Dependencias de Negocios
 builder.Services.AddScoped<IAlmacen, Almacen>();
-builder.Services.AddScoped<IAdaptadorMateriasPrimas,AdaptadorMateriasPrimas>();
+builder.Services.AddScoped<IControladorDeVentas, ControladorDeVentas>();
+builder.Services.AddScoped<IReportesDeVentas, ReporteDeVentas>();
+builder.Services.AddScoped<IProductosVendidos, ProductosVendidos>();
+builder.Services.AddScoped<IServiciosVentas, ServiciosVentas>();
+builder.Services.AddScoped<IAdaptadorMateriasPrimas, AdaptadorMateriasPrimas>();
 builder.Services.AddScoped<IServiciosAlmacen, ServiciosAlmacen>();
 builder.Services.AddScoped<IServiciosElaboracion, ServiciosElaboracion>();
 builder.Services.AddScoped<IServiciosVentas, ServiciosVentas>();
-builder.Services.AddScoped<IElaboracion,Elaboracion>();
+builder.Services.AddScoped<IElaboracion, Elaboracion>();
 builder.Services.AddScoped<IServiciosNegocios, ServiciosNegocios>();
 builder.Services.AddScoped<IServicios, Servicios>();
-builder.Services.AddScoped<ITraduccion,Traduccion>();
+builder.Services.AddScoped<ITraduccion, Traduccion>();
 builder.Services.AddScoped<IServiciosCompras, ServiciosCompras>();
-builder.Services.AddScoped<IServiciosGenerales,ServicioGeneral>();
-builder.Services.AddScoped<IAdaptadorIngredientes,AdaptadorIngredientes>();
+builder.Services.AddScoped<IServiciosGenerales, ServicioGeneral>();
+builder.Services.AddScoped<IAdaptadorIngredientes, AdaptadorIngredientes>();
 builder.Services.AddScoped<IAdaptadorMateriasPrimas, AdaptadorMateriasPrimas>();
 
 

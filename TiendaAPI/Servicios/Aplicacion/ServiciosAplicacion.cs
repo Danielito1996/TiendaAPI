@@ -4,16 +4,16 @@ using TiendaAPI.Servicios.Aplicacion.Logs;
 
 namespace TiendaAPI.Servicios.Aplicacion
 {
-    public class ServiciosAplicacion:IServiciosAplicacion
+    public class ServiciosAplicacion : IServiciosAplicacion
     {
         private IGenericFactory _genericFactory;
         private IPorSQLite _porSQLite;
         private IServiciosLogs _serviciosLogs;
-        public ServiciosAplicacion(IGenericFactory genericFactory,IPorSQLite porSQLite,IServiciosLogs serviciosLogs)
+        public ServiciosAplicacion(IGenericFactory genericFactory, IPorSQLite porSQLite, IServiciosLogs serviciosLogs)
         {
             _genericFactory = genericFactory;
             _porSQLite = porSQLite;
-            _serviciosLogs=serviciosLogs;
+            _serviciosLogs = serviciosLogs;
         }
         public IGenericFactory ObtenerConstructor()
         {
@@ -23,8 +23,8 @@ namespace TiendaAPI.Servicios.Aplicacion
         {
             return _porSQLite;
         }
-        public IServiciosLogs ObtenerServiciosLogs() 
-        { 
+        public IServiciosLogs ObtenerServiciosLogs()
+        {
             return _serviciosLogs;
         }
     }

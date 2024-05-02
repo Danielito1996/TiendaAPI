@@ -1,6 +1,5 @@
 ﻿using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Modelos.AreaElaboracion;
-using TiendaAPI.Modelos.AreaFinanzas;
 using TiendaAPI.Modelos.Generales;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
@@ -105,6 +104,17 @@ namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores
                 throw new Exception($"No se encontró la Materia Prima con ID {ingredientes.MateriaPrimaId} en la base de datos.");
             }
             return materiaPrima;
+        }
+        public async Task<List<Ingrediente>> TraducirProductosAIngredientes(ProductoVendido vendidos)
+        {
+            var NormasTecnicas = (await _bd.ObtenerListaDeElementos<NormasTecnicas>()).FirstOrDefault(u => u.Producto.Descripcion == vendidos.producto.Descripcion);
+            var lis = new List<Ingrediente>();
+            foreach (var item in NormasTecnicas.Ingredientes)
+            {
+                item.Cantidad *= vendidos.Cantidad;
+                lis.Add(item);
+            }
+            return lis;
         }
     }
 }

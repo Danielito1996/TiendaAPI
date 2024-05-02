@@ -1,7 +1,7 @@
 ﻿using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 
-namespace TiendaAPI.Servicios.Negocios.AreaAlmacen.AdaptadoresDeAlmacen
+namespace TiendaAPI.Servicios.Negocios.ServicioDeTraduccion.AdaptadoresDeAlmacen
 {
     public class AdaptadorMateriasPrimas : IAdaptadorMateriasPrimas
     {

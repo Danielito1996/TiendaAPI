@@ -1,5 +1,4 @@
-﻿using TiendaAPI.Modelos.AreaAlmacen;
-using TiendaAPI.Modelos.AreaElaboracion;
+﻿using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 
 namespace TiendaAPI.Servicios.Negocios.AreaElaboracion.AdaptadoresDeElaboracion

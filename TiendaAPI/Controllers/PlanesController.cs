@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Modelos.AreaElaboracion;
-using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion.Logs;
 using TiendaAPI.Servicios.Negocios;
 
@@ -16,11 +13,11 @@ namespace TiendaAPI.Controllers
     {
         private IServiciosNegocios _negocios;
         private IServiciosLogs _logs;
-        public PlanesController(IServiciosNegocios serviciosNegocios,IServiciosLogs logs) 
+        public PlanesController(IServiciosNegocios serviciosNegocios, IServiciosLogs logs)
         {
-            _negocios= serviciosNegocios;
-            _logs= logs;
-        }   
+            _negocios = serviciosNegocios;
+            _logs = logs;
+        }
         // GET: api/<PlanesController>
         [HttpGet]
         public async Task<string> Get()
@@ -39,8 +36,8 @@ namespace TiendaAPI.Controllers
         [HttpPost]
         public async Task<string> PostPlanGeneral([FromBody] List<PlanIndividual> planesIndividuales)
         {
-             try
-             {
+            try
+            {
                 await _negocios.ObtenerServiciosDeElaboracion().ConstruirPlanGeneral(planesIndividuales);
 
             }
@@ -51,7 +48,7 @@ namespace TiendaAPI.Controllers
             }
             return "Plan construido correctamente";
         }
-        
+
         // PUT api/<PlanesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)

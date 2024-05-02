@@ -1,8 +1,5 @@
 ﻿using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Modelos.Generales;
-using TiendaAPI.Servicios.Aplicacion.BaseDatos;
-using TiendaAPI.Servicios.Aplicacion.Factory;
-using TiendaAPI.Servicios.Aplicacion.Logs;
 
 namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
 {

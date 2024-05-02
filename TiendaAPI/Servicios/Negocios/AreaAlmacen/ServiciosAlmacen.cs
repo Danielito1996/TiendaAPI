@@ -1,29 +1,24 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using TiendaAPI.Modelos.AreaAlmacen;
+﻿using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Modelos.AreaFinanzas;
-using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
-using TiendaAPI.Servicios.Aplicacion.Logs;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.Almacen;
 using TiendaAPI.Servicios.Negocios.AreaAlmacen.AreaCompras;
-using TiendaAPI.Servicios.Negocios.AreaElaboracion;
 using TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores;
 
 namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
 {
-    public class ServiciosAlmacen:IServiciosAlmacen
+    public class ServiciosAlmacen : IServiciosAlmacen
     {
         private IAlmacen _almacen;
         private ITraduccion _traductor;
         private IServiciosCompras _serviciosCompras;
         private IGenericFactory _factory;
-        public ServiciosAlmacen(IServiciosCompras serviciosCompras,IGenericFactory factory, ITraduccion traduccion,IAlmacen almacen)
+        public ServiciosAlmacen(IServiciosCompras serviciosCompras, IGenericFactory factory, ITraduccion traduccion, IAlmacen almacen)
         {
             _almacen = almacen;
             _traductor = traduccion;
-            _serviciosCompras= serviciosCompras;
+            _serviciosCompras = serviciosCompras;
             _factory = factory;
         }
         public async Task<List<MateriaPrima>> MostrarMateriasPrimas()
@@ -55,11 +50,11 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
         public async Task RealizarCompra(List<Compras> compras)
         {
             List<MateriaPrima> listaMateriasPrimas = await ArmarListaDeMatriasPrimas(compras);
-            if (compras.Count>1)
+            if (compras.Count > 1)
             {
                 await _serviciosCompras.GenerarNuevaAdquisicion(compras);
-                
-                foreach(var item in listaMateriasPrimas)
+
+                foreach (var item in listaMateriasPrimas)
                 {
                     await _almacen.AnadirMateriaPrima(item);
                 }
@@ -73,7 +68,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
             {
                 await _almacen.InsertarCompras(item.MateriaPrima);
             }*/
-            
+
         }
         public IServiciosCompras ObtenerServiciosCompras()
         {
@@ -81,8 +76,8 @@ namespace TiendaAPI.Servicios.Negocios.AreaAlmacen
         }
         async Task<List<MateriaPrima>> ArmarListaDeMatriasPrimas(List<Compras> compras)
         {
-            List<MateriaPrima>materiaPrimas = new List<MateriaPrima>();
-            foreach(Compras compra in compras)
+            List<MateriaPrima> materiaPrimas = new List<MateriaPrima>();
+            foreach (Compras compra in compras)
             {
                 var materiaPrima = await _factory.ConstruirElemento<MateriaPrima>();
                 materiaPrima.Descripcion = compra.MateriaPrima;

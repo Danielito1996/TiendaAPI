@@ -11,7 +11,7 @@ namespace TiendaAPI.Servicios
         private IServiciosNegocios _serviciosNegocios;
         private IServiciosAplicacion _serviciosAplicacion;
         public Servicios(IServiciosNegocios serviciosNegocios, IServiciosAplicacion serviciosAplicacion)
-        { 
+        {
             _serviciosNegocios = serviciosNegocios;
             _serviciosAplicacion = serviciosAplicacion;
             InicializarAlmacen();

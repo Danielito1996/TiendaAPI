@@ -1,8 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using TiendaAPI.Modelos.Generales;
+﻿using TiendaAPI.Modelos.Generales;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 
 namespace TiendaAPI.Modelos.AreaElaboracion
@@ -11,9 +7,9 @@ namespace TiendaAPI.Modelos.AreaElaboracion
     {
         public int Id { get; set; }
         public Producto Producto { get; set; }
-        public List<Ingrediente> Ingredientes {get; set; }
+        public List<Ingrediente> Ingredientes { get; set; }
 
-        public double? PrecioDeCosto{get; set; }
+        public double? PrecioDeCosto { get; set; }
 
         /* public double CalcularPrecioDeCosto()
          {

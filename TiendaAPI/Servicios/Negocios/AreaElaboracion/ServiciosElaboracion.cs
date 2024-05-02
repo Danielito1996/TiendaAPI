@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Security.Cryptography.X509Certificates;
-using TiendaAPI.Modelos.AreaElaboracion;
+﻿using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Modelos.Generales;
 using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 using TiendaAPI.Servicios.Aplicacion.Factory;
@@ -8,7 +6,7 @@ using TiendaAPI.Servicios.Aplicacion.Logs;
 
 namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
 {
-    public class ServiciosElaboracion:IServiciosElaboracion
+    public class ServiciosElaboracion : IServiciosElaboracion
     {
         private IPorSQLite _porSQLite;
         private IServiciosLogs _serviciosLogs;
@@ -20,7 +18,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
             _genericFactory = genericFactory;
         }
 
-        public async Task<bool> ConstruirFichasDeCosto(List<Ingrediente> ingredientes,Producto producto)
+        public async Task<bool> ConstruirFichasDeCosto(List<Ingrediente> ingredientes, Producto producto)
         {
             try
             {
@@ -36,11 +34,11 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
             }
             return true;
         }
-        public async Task<PlanIndividual> ConstruirPlanIndividual(Producto producto,double cantidad)
+        public async Task<PlanIndividual> ConstruirPlanIndividual(Producto producto, double cantidad)
         {
-            var individual =await _genericFactory.ConstruirElemento<PlanIndividual>();
+            var individual = await _genericFactory.ConstruirElemento<PlanIndividual>();
             individual.Producto = producto;
-            individual.Cantidad = cantidad; 
+            individual.Cantidad = cantidad;
             return individual;
         }
         public async Task<PlanGeneral> ConstruirPlanGeneral(List<PlanIndividual> planesIndividuales)

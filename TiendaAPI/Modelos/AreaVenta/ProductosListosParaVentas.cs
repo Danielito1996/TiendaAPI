@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using TiendaAPI.Modelos.Generales;
+﻿using TiendaAPI.Modelos.Generales;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 namespace TiendaAPI.Modelos.AreaVenta
 {

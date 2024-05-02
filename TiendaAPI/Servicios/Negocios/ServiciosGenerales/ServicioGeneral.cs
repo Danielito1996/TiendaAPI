@@ -40,7 +40,7 @@ namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales
         }
         public async Task EliminarProductos(int id)
         {
-            await _bd.EliminarElemento<Producto>(id);   
+            await _bd.EliminarElemento<Producto>(id);
         }
     }
 }
