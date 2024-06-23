@@ -3,15 +3,18 @@ using TiendaAPI.Data;
 using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Modelos.AreaElaboracion;
 using TiendaAPI.Servicios.Aplicacion.Factory;
+using TiendaAPI.Servicios.Aplicacion.Logs;
 
 namespace TiendaAPI.Servicios.Aplicacion.BaseDatos
 {
     public class PorSQLite : IPorSQLite
     {
         private readonly TiendaDbContext _context;
-        public PorSQLite(TiendaDbContext context)
+        private IServiciosLogs _log;
+        public PorSQLite(TiendaDbContext context,IServiciosLogs log)
         {
             _context = context;
+            _log = log;
         }
         public async Task<List<T>> ObtenerListaDeElementos<T>() where T : class, new()
         {
@@ -59,7 +62,7 @@ namespace TiendaAPI.Servicios.Aplicacion.BaseDatos
             }
             catch (Exception ex)
             {
-
+                await _log.Log($"Archivo: PorSQLite -> Error al guardar Datos: {ex.Message}");
             }
             return false;
         }
@@ -85,6 +88,16 @@ namespace TiendaAPI.Servicios.Aplicacion.BaseDatos
             }
             _context.Set<T>().Remove(elemento);
             await _context.SaveChangesAsync();
+            return true;
+        }
+
+        //Insertar elementos por Listas
+        public async Task<bool> GuardarListaDeElementos<T>(List<T> list) where T:class,IEntity,new()
+        {
+            foreach (var item in list)
+            {
+                await GuardarElemento<T>(item);
+            }
             return true;
         }
     }

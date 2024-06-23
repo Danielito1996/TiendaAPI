@@ -36,7 +36,12 @@ namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales
         }
         public async Task ModificarProducto(Producto producto)
         {
-            await _bd.ModificarElemento<Producto>(producto);
+            var encontrado= await _bd.ObtenerElemento<Producto>(producto.Id);
+            if (encontrado == null)
+                throw new Exception("Producto no encontrado");
+            encontrado.Descripcion=producto.Descripcion;
+            encontrado.Precio=producto.Precio;
+            await _bd.ModificarElemento<Producto>(encontrado);
         }
         public async Task EliminarProductos(int id)
         {

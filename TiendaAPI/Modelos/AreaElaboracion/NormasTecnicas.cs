@@ -11,7 +11,7 @@ namespace TiendaAPI.Modelos.AreaElaboracion
 
         public double? PrecioDeCosto { get; set; }
 
-        /* public double CalcularPrecioDeCosto()
+         /*public double CalcularPrecioDeCosto()
          {
              double acumulado = 0;
              foreach (var item in Ingredientes)

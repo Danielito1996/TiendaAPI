@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TiendaAPI.Modelos.Generales;
+using TiendaAPI.Servicios.Aplicacion.BaseDatos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +10,13 @@ namespace TiendaAPI.Controllers
     [ApiController]
     public class ElaboracionController : ControllerBase
     {
+        private IPorSQLite _porSQLite;
+        public ElaboracionController(IPorSQLite porSQLite)
+        {
+            _porSQLite = porSQLite;
+        }
+
+
         // GET: api/<ElaboracionController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -24,8 +33,18 @@ namespace TiendaAPI.Controllers
 
         // POST api/<ElaboracionController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] List<Producto> productos)
         {
+            try
+            {
+                await _porSQLite.GuardarListaDeElementos<Producto>(productos);
+            }
+            catch (Exception ex)
+            {
+                return Problem($"Problemas al insertar {ex.Message}");
+            }
+            return Ok();
+              
         }
 
         // PUT api/<ElaboracionController>/5

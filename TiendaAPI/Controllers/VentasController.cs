@@ -56,7 +56,7 @@ namespace TiendaAPI.Controllers
         {
             try
             {
-                await _serviciosVentas.VenderProducto(venta.Productos);
+                await _serviciosVentas.VenderProducto(venta);
                 await _serviciosVentas.GenerarReporteDeVentas(venta.Productos);
                 return Ok();
             }

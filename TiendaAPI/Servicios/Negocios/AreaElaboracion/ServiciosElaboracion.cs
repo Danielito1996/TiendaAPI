@@ -17,7 +17,14 @@ namespace TiendaAPI.Servicios.Negocios.AreaElaboracion
             _serviciosLogs = serviciosLogs;
             _genericFactory = genericFactory;
         }
-
+        
+        public async Task<NormasTecnicas> ObtenerNormasTecnicas(int id)
+        {
+            var normaTecnica =(await _porSQLite.ObtenerListaDeElementos<NormasTecnicas>()).FirstOrDefault(u=>u.Producto.Id==id);
+            if (normaTecnica == null)
+                throw new Exception("No esta definida las normas tecnicas para este producto");
+            return normaTecnica;
+        }
         public async Task<bool> ConstruirFichasDeCosto(List<Ingrediente> ingredientes, Producto producto)
         {
             try

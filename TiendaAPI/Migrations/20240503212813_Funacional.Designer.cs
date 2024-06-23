@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaAPI.Data;
 
@@ -10,9 +11,11 @@ using TiendaAPI.Data;
 namespace TiendaAPI.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    partial class TiendaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240503212813_Funacional")]
+    partial class Funacional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -94,6 +97,8 @@ namespace TiendaAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormasTecnicasId");
+
+                    b.HasIndex("ProductoId");
 
                     b.HasIndex("StockDeIngredientesId");
 
@@ -346,6 +351,10 @@ namespace TiendaAPI.Migrations
                         .WithMany("Ingredientes")
                         .HasForeignKey("NormasTecnicasId");
 
+                    b.HasOne("TiendaAPI.Modelos.Generales.Producto", null)
+                        .WithMany("Ingredientes")
+                        .HasForeignKey("ProductoId");
+
                     b.HasOne("TiendaAPI.Modelos.AreaElaboracion.StockDeIngredientes", null)
                         .WithMany("Ingredientes")
                         .HasForeignKey("StockDeIngredientesId");
@@ -464,6 +473,11 @@ namespace TiendaAPI.Migrations
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Venta", b =>
                 {
                     b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("TiendaAPI.Modelos.Generales.Producto", b =>
+                {
+                    b.Navigation("Ingredientes");
                 });
 #pragma warning restore 612, 618
         }
