@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using TiendaAPI.Data;
 using TiendaAPI.Servicios;
 using TiendaAPI.Servicios.Aplicacion;
@@ -14,6 +15,7 @@ using TiendaAPI.Servicios.Negocios.AreaElaboracion.AdaptadoresDeElaboracion;
 using TiendaAPI.Servicios.Negocios.AreaElaboracion.StockDeElaboracion;
 using TiendaAPI.Servicios.Negocios.AreaVentas;
 using TiendaAPI.Servicios.Negocios.AreaVentas.GeneracionDeReportes;
+using TiendaAPI.Servicios.Negocios.AreaVentas.ZonaDeOfertas;
 using TiendaAPI.Servicios.Negocios.AreaVentas.ZonaDeProdcutosVendidos;
 using TiendaAPI.Servicios.Negocios.AreaVentas.ZonaDeVentas;
 using TiendaAPI.Servicios.Negocios.ServicioDeTraduccion.AdaptadoresDeAlmacen;
@@ -25,16 +27,41 @@ var builder = WebApplication.CreateBuilder(args);
 var baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "API");
 var dbPath = Path.Combine(baseDir, "Datos.db");
 
-// Verificar si la carpeta no existe y crearla si es necesario
+var logPath = Path.Combine(baseDir, "Log");
+var imagesPath = Path.Combine(baseDir, "Imagenes");
+var categoriesPath = Path.Combine(imagesPath, "Categorias");
+var productsPath = Path.Combine(imagesPath, "Productos");
+
+
+// Verificar y crear la carpeta de Log si no existe
+if (!Directory.Exists(logPath))
+{
+    Directory.CreateDirectory(logPath);
+}
+
+// Verificar y crear la carpeta base si no existe
 if (!Directory.Exists(baseDir))
 {
     Directory.CreateDirectory(baseDir);
 }
 
-// Verificar si el archivo no existe y crearlo si es necesario
-if (!File.Exists(dbPath))
+
+// Verificar y crear la carpeta de Imagenes si no existe
+if (!Directory.Exists(imagesPath))
 {
-    File.Create(dbPath).Close();
+    Directory.CreateDirectory(imagesPath);
+}
+
+// Verificar y crear la carpeta de Categorias si no existe
+if (!Directory.Exists(categoriesPath))
+{
+    Directory.CreateDirectory(categoriesPath);
+}
+
+// Verificar y crear la carpeta de Productos si no existe
+if (!Directory.Exists(productsPath))
+{
+    Directory.CreateDirectory(productsPath);
 }
 
 // Add services to the container.
@@ -64,7 +91,7 @@ builder.Services.AddScoped<IServiciosCompras, ServiciosCompras>();
 builder.Services.AddScoped<IServiciosGenerales, ServicioGeneral>();
 builder.Services.AddScoped<IAdaptadorIngredientes, AdaptadorIngredientes>();
 builder.Services.AddScoped<IAdaptadorMateriasPrimas, AdaptadorMateriasPrimas>();
-
+builder.Services.AddScoped<IRectorDeCategorias,RectorDeOfertas>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -77,6 +104,7 @@ builder.Services.AddDbContext<TiendaDbContext>(options =>
     options.UseSqlite($"Data Source={dbPath}"));
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

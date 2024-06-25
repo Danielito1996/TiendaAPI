@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TiendaAPI.Data;
 
@@ -10,9 +11,11 @@ using TiendaAPI.Data;
 namespace TiendaAPI.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    partial class TiendaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623162613_Creacion de Modelo Categorias")]
+    partial class CreaciondeModeloCategorias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
@@ -216,26 +219,6 @@ namespace TiendaAPI.Migrations
                     b.ToTable("Compras");
                 });
 
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Categorias", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("OfertasId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OfertasId");
-
-                    b.ToTable("Categorias");
-                });
-
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Factura", b =>
                 {
                     b.Property<int>("Id")
@@ -249,21 +232,6 @@ namespace TiendaAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Facturas");
-                });
-
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Ofertas", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ofertas");
                 });
 
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.ProductosListosParaVentas", b =>
@@ -322,14 +290,7 @@ namespace TiendaAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CategoriasId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -340,8 +301,6 @@ namespace TiendaAPI.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoriasId");
 
                     b.HasIndex("ProductosListosParaVentasId");
 
@@ -432,13 +391,6 @@ namespace TiendaAPI.Migrations
                         .HasForeignKey("AdquisicionId");
                 });
 
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Categorias", b =>
-                {
-                    b.HasOne("TiendaAPI.Modelos.AreaVenta.Ofertas", null)
-                        .WithMany("CategoriasDeProductos")
-                        .HasForeignKey("OfertasId");
-                });
-
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Venta", b =>
                 {
                     b.HasOne("TiendaAPI.Modelos.AreaVenta.Factura", null)
@@ -448,10 +400,6 @@ namespace TiendaAPI.Migrations
 
             modelBuilder.Entity("TiendaAPI.Modelos.Generales.Producto", b =>
                 {
-                    b.HasOne("TiendaAPI.Modelos.AreaVenta.Categorias", null)
-                        .WithMany("Productos")
-                        .HasForeignKey("CategoriasId");
-
                     b.HasOne("TiendaAPI.Modelos.AreaVenta.ProductosListosParaVentas", null)
                         .WithMany("Productos")
                         .HasForeignKey("ProductosListosParaVentasId");
@@ -501,19 +449,9 @@ namespace TiendaAPI.Migrations
                     b.Navigation("Compras");
                 });
 
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Categorias", b =>
-                {
-                    b.Navigation("Productos");
-                });
-
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Factura", b =>
                 {
                     b.Navigation("Ventas");
-                });
-
-            modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.Ofertas", b =>
-                {
-                    b.Navigation("CategoriasDeProductos");
                 });
 
             modelBuilder.Entity("TiendaAPI.Modelos.AreaVenta.ProductosListosParaVentas", b =>

@@ -2,6 +2,7 @@
 using TiendaAPI.Data;
 using TiendaAPI.Modelos.AreaAlmacen;
 using TiendaAPI.Modelos.AreaElaboracion;
+using TiendaAPI.Modelos.AreaVenta;
 using TiendaAPI.Servicios.Aplicacion.Factory;
 using TiendaAPI.Servicios.Aplicacion.Logs;
 
@@ -31,6 +32,18 @@ namespace TiendaAPI.Servicios.Aplicacion.BaseDatos
         {
             return await _context.Set<T>()
                 .Include(i => ((StockDeIngredientes)(object)i).Ingredientes)
+                .ToListAsync() as List<T>;
+        }
+        public async Task<List<T>> ObtenerListaDeElementos<T>(Ofertas ofertas) where T : class, new()
+        {
+            return await _context.Set<T>()
+                .Include(i => ((Ofertas)(object)i).CategoriasDeProductos)
+                .ToListAsync() as List<T>;
+        }
+        public async Task<List<T>> ObtenerListaDeElementos<T>(List<Categorias> categorias) where T : class, new()
+        {
+            return await _context.Set<T>()
+                .Include(i => ((Categorias)(object)i).Productos)
                 .ToListAsync() as List<T>;
         }
         public async Task<List<T>> ObtenerListaDeElementos<T>(PlanGeneral stock) where T : class, new()

@@ -23,6 +23,8 @@ namespace TiendaAPI.Data
         public DbSet<Factura> Facturas { get; set; }
         public DbSet<ReporteVentasGenerales> ReportesDeVentas { get; set; }
         public DbSet<ProductoVendido> ProductosVendidos { get; set; }
+        public DbSet<Categorias> Categorias { get; set; }
+        public DbSet<Ofertas> Ofertas { get; set; }
         public TiendaDbContext(DbContextOptions<TiendaDbContext> options) : base(options)
         {
 

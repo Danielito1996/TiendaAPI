@@ -23,6 +23,7 @@ namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales
             var aguardar = await _factory.ConstruirElemento<Producto>();
             aguardar.Descripcion = aInsertar.Descripcion;
             aguardar.Precio = aInsertar.Precio;
+            aguardar.Nombre = aInsertar.Nombre;
 
             await _bd.GuardarElemento<Producto>(aguardar);
         }
@@ -41,6 +42,7 @@ namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales
                 throw new Exception("Producto no encontrado");
             encontrado.Descripcion=producto.Descripcion;
             encontrado.Precio=producto.Precio;
+            encontrado.Nombre=producto.Nombre;
             await _bd.ModificarElemento<Producto>(encontrado);
         }
         public async Task EliminarProductos(int id)

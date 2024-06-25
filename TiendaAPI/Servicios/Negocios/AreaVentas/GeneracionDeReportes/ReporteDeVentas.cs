@@ -22,7 +22,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaVentas.GeneracionDeReportes
             var reporte = await _factory.ConstruirElemento<ReporteVentasGenerales>();
             foreach (var v in vendidos)
             {
-                double valor = cartasTecnicas.FirstOrDefault(u => u.Producto.Descripcion == v.producto.Descripcion).PrecioDeCosto ?? 0.0;
+                double valor = cartasTecnicas.FirstOrDefault(u => u.Producto.Nombre == v.producto.Nombre).PrecioDeCosto ?? 0.0;
                 precioCosto += valor * v.Cantidad;
             }
         }

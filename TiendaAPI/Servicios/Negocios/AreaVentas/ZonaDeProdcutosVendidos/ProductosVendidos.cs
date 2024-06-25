@@ -43,7 +43,7 @@ namespace TiendaAPI.Servicios.Negocios.AreaVentas.ZonaDeProdcutosVendidos
                 await InicializarStock();
             }
             await ActualizarStock();
-            var encontrada = Stock.Productos.FirstOrDefault(u => u.producto.Descripcion == producto.producto.Descripcion);
+            var encontrada = Stock.Productos.FirstOrDefault(u => u.producto.Nombre == producto.producto.Nombre);
             if (encontrada == null)
             {
                 Stock.Productos.Add(producto);

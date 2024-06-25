@@ -107,7 +107,7 @@ namespace TiendaAPI.Servicios.Negocios.ServiciosGenerales.Adaptadores
         }
         public async Task<List<Ingrediente>> TraducirProductosAIngredientes(ProductoVendido vendidos)
         {
-            var NormasTecnicas = (await _bd.ObtenerListaDeElementos<NormasTecnicas>()).FirstOrDefault(u => u.Producto.Descripcion == vendidos.producto.Descripcion);
+            var NormasTecnicas = (await _bd.ObtenerListaDeElementos<NormasTecnicas>()).FirstOrDefault(u => u.Producto.Nombre == vendidos.producto.Nombre);
             var lis = new List<Ingrediente>();
             foreach (var item in NormasTecnicas.Ingredientes)
             {
